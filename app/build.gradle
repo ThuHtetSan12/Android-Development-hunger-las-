@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.example.hunger_las_dit2b02'
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.hunger_las_dit2b02"
         minSdk 30
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
