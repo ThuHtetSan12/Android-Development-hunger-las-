@@ -7,7 +7,7 @@
     android:background="#8E4739">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgSplash"
         android:layout_width="wrap_content"
         android:layout_height="849dp"
         android:scaleType="fitCenter"
