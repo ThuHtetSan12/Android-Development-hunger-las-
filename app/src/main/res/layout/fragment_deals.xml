@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DealsFragment">
+    android:layout_marginBottom="50dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Search bar with filter button -->
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="Search"
+            android:inputType="text" />
+
+    </RelativeLayout>
+
+    <!-- List of CardViews for displaying deals -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cardDeals"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Deals"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
+        android:layout_below="@id/searchLayout"
+        android:padding="16dp"
+        android:clipToPadding="false" />
 
-</FrameLayout>
+</RelativeLayout>

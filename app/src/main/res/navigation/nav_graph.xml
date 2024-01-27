@@ -1,0 +1,27 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/nav_graph"-->
+<!--    app:startDestination="@id/profileFragment">-->
+
+<!--    &lt;!&ndash; Profile Fragment &ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:id="@+id/profileFragment"-->
+<!--        android:name="com.example.hunger_las_dit2b02.ProfileFragment"-->
+<!--        android:label="ProfileFragment">-->
+
+<!--        <action-->
+<!--            android:id="@+id/action_profileFragment_to_settingsFragment"-->
+<!--            app:destination="@id/settingsFragment" />-->
+
+<!--    </fragment>-->
+
+<!--    &lt;!&ndash; Settings Fragment &ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:id="@+id/settingsFragment"-->
+<!--        android:name="com.example.hunger_las_dit2b02.SettingsFragment"-->
+<!--        android:label="SettingsFragment">-->
+<!--        &lt;!&ndash; Add settings fragment details here &ndash;&gt;-->
+<!--    </fragment>-->
+
+<!--</navigation>-->
