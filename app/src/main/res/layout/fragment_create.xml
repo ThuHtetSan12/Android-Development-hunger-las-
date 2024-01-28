@@ -1,17 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateFragment">
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Header: New Review -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Create"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/chestnut"/>
+        android:id="@+id/txtHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Review"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"/>
 
-</FrameLayout>
+    <!-- Post Button -->
+    <Button
+        android:id="@+id/btnPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Image Upload Section -->
+    <LinearLayout
+        android:id="@+id/layoutImageUpload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/txtHeader"
+        android:layout_marginTop="16dp">
+
+        <!-- Add Photo Button -->
+        <Button
+            android:id="@+id/btnAddPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Photo"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Image Previews -->
+        <LinearLayout
+            android:id="@+id/layoutImagePreviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+    </LinearLayout>
+
+    <!-- Restaurant Name Input -->
+    <LinearLayout
+        android:id="@+id/restaurantNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/layoutImageUpload"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restaurant:"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/txtRestaurantInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/layoutImageUpload"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:minLines="1"
+            android:inputType="text"
+            android:background="@drawable/edit_text_background"/>
+
+    </LinearLayout>
+
+    <!-- Rating Bar -->
+    <LinearLayout
+        android:id="@+id/ratingBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/restaurantNameLayout"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating:"
+            android:textSize="18sp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:rating="0"/>
+
+    </LinearLayout>
+
+    <!-- Description Input -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/ratingBarLayout"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description:"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/txtDescriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:minLines="10"
+            android:inputType="textMultiLine"
+            android:background="@drawable/edit_text_background"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
