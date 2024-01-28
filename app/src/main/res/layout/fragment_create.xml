@@ -76,6 +76,7 @@
             android:layout_height="48dp"
             android:layout_below="@id/layoutImageUpload"
             android:layout_marginTop="5dp"
+            android:padding="8dp"
             android:minLines="1"
             android:inputType="text"
             android:background="@drawable/edit_text_background"/>
@@ -127,6 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ratingBar"
             android:layout_marginTop="5dp"
+            android:padding="8dp"
             android:minLines="10"
             android:inputType="textMultiLine"
             android:background="@drawable/edit_text_background"/>
