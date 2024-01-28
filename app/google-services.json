@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "820429438172",
+    "project_id": "hunger-las",
+    "storage_bucket": "hunger-las.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820429438172:android:e82e445b701e50f6d7c819",
+        "android_client_info": {
+          "package_name": "com.example.hunger_las_dit2b02"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDamJEkYAL0Vo8onKgPEZua6McmaiuZtvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
