@@ -1,38 +1,33 @@
 package com.example.hunger_las_dit2b02;
 
-// Post.java
 public class Post {
-    private int profilePictureResId;
-    private String username;
+    private User user;
     private String restaurantInfo;
     private int postImageResId;
     private int likeCount;
     private int commentCount;
     private String caption;
     private String date;
+    private int rating;
 
-    public Post(int profilePictureResId, String username, String restaurantInfo,
-                int postImageResId, int likeCount, int commentCount,
-                String caption, String date) {
-        this.profilePictureResId = profilePictureResId;
-        this.username = username;
+    public Post(User user, String restaurantInfo, int postImageResId,
+                int likeCount, int commentCount, String caption, String date, int rating) {
+        this.user = user;
         this.restaurantInfo = restaurantInfo;
         this.postImageResId = postImageResId;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.caption = caption;
         this.date = date;
+        this.rating = rating;
     }
 
-    // Add getters and setters as needed
-    // ...
-
-    public int getProfilePictureResId() {
-        return profilePictureResId;
+    public User getUser() {
+        return user;
     }
 
-    public String getUsername() {
-        return username;
+    public int getRating() {
+        return rating;
     }
 
     public String getRestaurantInfo() {

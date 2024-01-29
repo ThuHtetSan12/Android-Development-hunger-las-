@@ -3,8 +3,8 @@ package com.example.hunger_las_dit2b02;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-// PostAdapter.java
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> postList;
@@ -31,16 +30,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
+        User user = post.getUser();
 
         // Bind data to views
-        holder.profilePictureImageView.setImageResource(post.getProfilePictureResId());
-        holder.usernameTextView.setText(post.getUsername());
+        holder.profilePictureImageView.setImageResource(user.getProfilePictureResId());
+        holder.usernameTextView.setText(user.getUsername());
         holder.restaurantInfoTextView.setText(post.getRestaurantInfo());
         holder.postImageView.setImageResource(post.getPostImageResId());
         holder.likeCountTextView.setText(String.valueOf(post.getLikeCount()));
         holder.commentCountTextView.setText(String.valueOf(post.getCommentCount()));
         holder.captionTextView.setText(post.getCaption());
         holder.dateTextView.setText("Posted on: " + post.getDate());
+
+        // Set rating dynamically using RatingBar
+        RatingBar ratingBar = holder.ratingStarsRatingBar;
+        ratingBar.setRating(post.getRating());
 
         // Set click listeners for like, comment, and favourite buttons
         // Implement the click listeners as needed
@@ -52,6 +56,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
+        public RatingBar ratingStarsRatingBar;
         ImageView profilePictureImageView;
         TextView usernameTextView;
         TextView restaurantInfoTextView;
@@ -78,6 +83,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             favouriteIconImageView = itemView.findViewById(R.id.favouriteIconImageView);
             captionTextView = itemView.findViewById(R.id.captionTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
+
+            // RatingBar for rating
+            ratingStarsRatingBar = itemView.findViewById(R.id.ratingStarsRatingBar);
         }
     }
 }

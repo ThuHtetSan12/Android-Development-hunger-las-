@@ -54,16 +54,19 @@ public class HomeFragment extends Fragment {
 
         private List<Post> createSamplePosts() {
             List<Post> postList = new ArrayList<>();
+            User user1 = new User(R.drawable.logo, "Lindy");
+            User user2 = new User(R.drawable.logo, "Angie");
+            User user3 = new User(R.drawable.logo, "San");
 
             // Create sample Post objects
-            Post post1 = new Post(R.drawable.logo, "Lindy", "Mr Prata - Location 1",
-                    R.drawable.logo, 150, 30, "Yummers", "January 10, 2024");
+            Post post1 = new Post(user1, "Mr Prata - Location 1",
+                    R.drawable.logo, 150, 30, "Yummers", "January 10, 2024", 5);
 
-            Post post2 = new Post(R.drawable.logo, "Angie", "Yakiniku GO - Location 2",
-                    R.drawable.logo, 200, 40, "hardcoded data", "January 15, 2024");
+            Post post2 = new Post(user2, "Yakiniku GO - Location 2",
+                    R.drawable.logo, 200, 40, "hardcoded data", "January 15, 2024", 1);
 
-            Post post3 = new Post(R.drawable.logo, "San", "Sanook Kitchen - Location 3",
-                    R.drawable.logo, 120, 25, "yayayay", "January 20, 2024");
+            Post post3 = new Post(user3, "Sanook Kitchen - Location 3",
+                    R.drawable.logo, 120, 25, "yayayay", "January 20, 2024", 3);
 
             // Add posts to the list
             postList.add(post1);
