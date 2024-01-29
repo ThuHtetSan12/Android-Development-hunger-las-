@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- activity_restaurant_details.xml -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button_icon"
+            android:layout_margin="16dp" />
+
+        <!-- Restaurant image -->
+        <ImageView
+            android:id="@+id/restaurantImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/backButton"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo" />
+
+        <!-- Restaurant name and favourite icon -->
+        <TextView
+            android:id="@+id/restaurantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantImage"
+            android:text="Restaurant Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_margin="16dp" />
+
+        <!-- Location icon and restaurant location -->
+
+        <ImageView
+            android:id="@+id/favouriteIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantImage"
+            android:layout_marginStart="200dp"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="14dp"
+            android:layout_toEndOf="@id/restaurantName"
+            android:layout_toRightOf="@id/restaurantName"
+            android:src="@drawable/saved_icon" />
+
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantName"
+            android:src="@drawable/baseline_location_pin_24"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/restaurantLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantName"
+            android:layout_toEndOf="@id/locationIcon"
+            android:layout_toRightOf="@id/locationIcon"
+            android:text="Restaurant Location"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
+
+        <!-- Phone icon and restaurant contact number -->
+        <ImageView
+            android:id="@+id/phoneIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantLocation"
+            android:src="@drawable/baseline_phone_24"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/restaurantContactNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantLocation"
+            android:layout_toEndOf="@id/phoneIcon"
+            android:layout_toRightOf="@id/phoneIcon"
+            android:text="Restaurant Contact Number"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
+
+        <!-- Opening hours -->
+        <TextView
+            android:id="@+id/openingHours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phoneIcon"
+            android:text="Opening Hours: XX:XX - XX:XX"
+            android:textSize="16sp"
+            android:layout_margin="16dp" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.hunger_las_dit2b02;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -38,6 +39,21 @@ public class SearchFragment extends Fragment {
         // Create and set the adapter
         restaurantAdapter = new RestaurantAdapter(restaurantList);
         recyclerView.setAdapter(restaurantAdapter);
+
+        // Set up item click listener
+        recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(getActivity(),
+                recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                // Handle item click, e.g., open RestaurantDetailsActivity
+                startActivity(new Intent(getActivity(), RestaurantDetailsActivity.class));
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                // Handle long item click if needed
+            }
+        }));
 
         return view;
     }
