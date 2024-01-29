@@ -1,7 +1,7 @@
 package com.example.hunger_las_dit2b02;
 
 public class Post {
-    private User user;
+    private User1 user;
     private String restaurantInfo;
     private int postImageResId;
     private int likeCount;
@@ -10,7 +10,7 @@ public class Post {
     private String date;
     private int rating;
 
-    public Post(User user, String restaurantInfo, int postImageResId,
+    public Post(User1 user, String restaurantInfo, int postImageResId,
                 int likeCount, int commentCount, String caption, String date, int rating) {
         this.user = user;
         this.restaurantInfo = restaurantInfo;
@@ -22,7 +22,7 @@ public class Post {
         this.rating = rating;
     }
 
-    public User getUser() {
+    public User1 getUser() {
         return user;
     }
 

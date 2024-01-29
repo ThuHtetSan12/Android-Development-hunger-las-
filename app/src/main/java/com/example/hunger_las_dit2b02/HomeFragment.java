@@ -25,10 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    TextView userName;
-    Button logout;
-    GoogleSignInClient gClient;
-    GoogleSignInOptions gOptions;
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
@@ -54,9 +50,9 @@ public class HomeFragment extends Fragment {
 
         private List<Post> createSamplePosts() {
             List<Post> postList = new ArrayList<>();
-            User user1 = new User(R.drawable.logo, "Lindy");
-            User user2 = new User(R.drawable.logo, "Angie");
-            User user3 = new User(R.drawable.logo, "San");
+            User1 user1 = new User1(R.drawable.logo, "Lindy");
+            User1 user2 = new User1(R.drawable.logo, "Angie");
+            User1 user3 = new User1(R.drawable.logo, "San");
 
             // Create sample Post objects
             Post post1 = new Post(user1, "Mr Prata - Location 1",
@@ -76,38 +72,3 @@ public class HomeFragment extends Fragment {
             return postList;
         }
     }
-
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//        // Initialize views
-//        logout = view.findViewById(R.id.logout);
-//        userName = view.findViewById(R.id.userName);
-//
-//        // Google Sign-In configuration
-//        gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-//        gClient = GoogleSignIn.getClient(requireContext(), gOptions);
-//
-//        // Check if the user is already signed in
-//        GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(requireContext());
-//        if (gAccount != null) {
-//            String gName = gAccount.getDisplayName();
-//            userName.setText(gName);
-//        }
-//
-//        // Set onClickListener for the logout button
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        requireActivity().finish();
-//                        startActivity(new Intent(requireContext(), Login.class));
-//                    }
-//                });
-//            }
-//        });
-//    }
-//}
