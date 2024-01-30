@@ -1,72 +1,231 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- Updated Layout with Username Above Image and Additional Views -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Username -->
-    <TextView
-        android:id="@+id/txtUsernameView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
-
-    <!-- Settings Button -->
-    <ImageButton
-        android:id="@+id/btnSettings"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/settings_icon"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="Settings Button"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp" />
-
-    <!--    &lt;!&ndash; Main content area &ndash;&gt;-->
+    <!-- User Information Section -->
     <LinearLayout
+        android:id="@+id/userInfoLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:padding="16dp">
 
-        <!-- Welcome TextView -->
+        <!-- Username Layout -->
+        <LinearLayout
+            android:id="@+id/usernameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Username -->
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:layout_gravity="start"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Settings Icon -->
+            <ImageView
+                android:id="@+id/settingsIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="description"
+                android:src="@drawable/settings_icon" />
+        </LinearLayout>
+
+
+
+        <!-- User Statistics -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+
+
+            <ImageView
+                android:id="@+id/profileimage"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/circle_background"
+                android:contentDescription="description"
+                android:scaleType="centerInside"
+                android:src="@drawable/default_profile_image" />
+
+            <LinearLayout
+                android:id="@+id/postLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Posts"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+            <!-- Followers Layout -->
+            <LinearLayout
+                android:id="@+id/follower"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/followersTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Followers"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!-- Following Layout -->
+            <LinearLayout
+                android:id="@+id/followingLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/followingTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Following"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <!-- name -->
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        <!-- Bio -->
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/bioTextView"
+            android:layout_width="352dp"
             android:layout_height="wrap_content"
-            android:text="Welcome"
-            android:id="@+id/welcome"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/chestnut"
-            android:textSize="26sp"
-            android:textStyle="bold"/>
+            android:text="Bio"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <!-- User Name TextView -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/userName"
-            android:textColor="@color/chestnut"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
-
-        <!-- Logout Button -->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log Out"
-            android:id="@+id/logout"
-            android:textSize="20sp"
-            android:padding="12dp"
-            android:layout_marginTop="20dp"/>
     </LinearLayout>
+
+
+
+    <!-- Buttons: "Create Review" and "Edit Profile" -->
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_below="@id/userInfoLayout">
+
+        <Button
+            android:id="@+id/createReviewButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Create Review"
+            android:textAllCaps="false"
+            android:padding="5dp"/>
+
+        <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit Profile"
+            android:textAllCaps="false"
+            android:padding="5dp"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/logoutLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_below="@id/buttonsLayout">
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Log out"
+        android:textAllCaps="false"
+        android:padding="5dp"/>
+    </LinearLayout>
+
+    <!-- Recycler View for Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonsLayout"
+        android:padding="16dp" />
+
 
 </RelativeLayout>

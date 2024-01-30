@@ -31,7 +31,14 @@
             android:exported="true"/>
         <activity android:name=".Signup"
             android:exported="true"/>
-
+        <activity android:name=".Setting"
+            android:label="Setting"
+            android:exported="true">
+        </activity>
+        <activity android:name=".AccountSetting"
+            android:label="Account Setting"
+            android:exported="true">
+        </activity>
         <activity android:name=".RestaurantDetailsActivity" />
 
         <meta-data
