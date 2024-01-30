@@ -2,12 +2,12 @@ package com.example.hunger_las_dit2b02;
 
 public class Deal {
     private String restaurantName;
-    private int restaurantImage;
+    private String imagePath;
     private String dealInformation;
 
-    public Deal(String restaurantName, int restaurantImage, String dealInformation) {
+    public Deal(String restaurantName, String imagePath, String dealInformation) {
         this.restaurantName = restaurantName;
-        this.restaurantImage = restaurantImage;
+        this.imagePath = imagePath;
         this.dealInformation = dealInformation;
     }
 
@@ -15,11 +15,12 @@ public class Deal {
         return restaurantName;
     }
 
-    public int getRestaurantImage() {
-        return restaurantImage;
+    public String getImagePath() {
+        return imagePath;
     }
 
     public String getDealInformation() {
         return dealInformation;
     }
 }
+
