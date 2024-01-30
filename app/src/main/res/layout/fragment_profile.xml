@@ -52,7 +52,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
             android:id="@+id/userName"
             android:textColor="@color/chestnut"
             android:textSize="26sp"

@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -44,6 +45,8 @@ public class Login extends AppCompatActivity {
     GoogleSignInButton googleBtn;
     GoogleSignInOptions gOptions;
     GoogleSignInClient gClient;
+    SharedPreferences prefs;
+    private static final String USER_ID_KEY = "user_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,9 @@ public class Login extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
+                                        // Save user ID in SharedPreferences upon successful login
+                                        saveUserId(auth.getCurrentUser().getUid());
+
                                         Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Login.this, MainActivity.class));
                                         finish();
@@ -182,5 +188,15 @@ public class Login extends AppCompatActivity {
                 activityResultLauncher.launch(signInIntent);
             }
         });
+
+
+    }
+
+    //save user id to shared preferences (USER_ID_KEY)
+    private void saveUserId(String userId) {
+        prefs = getSharedPreferences("user_info", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(USER_ID_KEY, userId);
+        editor.apply();
     }
 }

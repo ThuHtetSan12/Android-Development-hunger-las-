@@ -1,17 +1,22 @@
 package com.example.hunger_las_dit2b02;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,6 +30,8 @@ public class ProfileFragment extends Fragment {
     Button logout;
     GoogleSignInClient gClient;
     GoogleSignInOptions gOptions;
+    SharedPreferences pref;
+    private static final String USER_ID_KEY = "user_id";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,19 +58,50 @@ public class ProfileFragment extends Fragment {
             String gName = gAccount.getDisplayName();
             userName.setText(gName);
         }
+        String savedUserId = getSavedUserId();
+        if (!TextUtils.isEmpty(savedUserId)) {
+            showUserIdMessage(savedUserId);
 
+        }else{
+            logoutAndRedirectToLogin();
+        }
         // Set onClickListener for the logout button
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        requireActivity().finish();
-                        startActivity(new Intent(requireContext(), Login.class));
-                    }
-                });
+                logoutAndRedirectToLogin();
             }
         });
+    }
+
+    private String getSavedUserId() {
+        if (getActivity() != null) {
+            pref = getActivity().getSharedPreferences("user_info", MODE_PRIVATE);
+            return pref.getString(USER_ID_KEY, "");
+        }else{
+            return "";
+        }
+    }
+
+    private void clearSavedUserId() {
+        pref = requireActivity().getSharedPreferences("user_info", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.remove(USER_ID_KEY);
+        editor.apply();
+    }
+    private void logoutAndRedirectToLogin(){
+        clearSavedUserId();
+        gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                requireActivity().finish();
+                startActivity(new Intent(requireContext(), Login.class));
+            }
+        });
+    }
+
+    private void showUserIdMessage(String userId) {
+        // Example: Display a Toast message with the user ID
+        Toast.makeText(requireContext(), "User ID: " + userId, Toast.LENGTH_SHORT).show();
     }
 }
