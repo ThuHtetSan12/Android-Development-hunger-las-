@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/default_profile_image"
+        android:elevation="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_profile_image" />
+
+
+    <ImageView
+        android:id="@+id/editProfileIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@id/profileImage"
+        android:layout_alignBottom="@id/profileImage"
+        android:layout_marginEnd="-3dp"
+        android:layout_marginBottom="-12dp"
+        android:background="@drawable/circle_background"
+        android:contentDescription="Edit Profile Icon"
+        android:padding="8dp"
+        android:src="@drawable/baseline_edit_24" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/profileImage"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="Enter your name"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileImage"
+        android:layout_marginTop="64dp"
+        android:text="Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/editTextName"
+        android:layout_marginTop="57dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="Enter your username"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextName"
+        android:layout_marginTop="34dp"
+        android:text="Username"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginTop="31dp"
+        android:text="Bio (optional)"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextBio"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginTop="57dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="Enter your bio"
+        android:inputType="text"
+        />
+
+    <Button
+        android:id="@+id/saveChangesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextBio"
+        android:layout_marginTop="123dp"
+        android:background="@drawable/button_background"
+        android:text="Save Changes"
+        android:textColor="@android:color/white" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+</RelativeLayout>

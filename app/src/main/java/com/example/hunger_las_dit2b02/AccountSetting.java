@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -43,7 +44,7 @@ public class AccountSetting extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void logoutAndRedirectToLogin(){
+    public void onLogOutClick(){
 
         clearSavedUserId();
         gClient.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -62,5 +63,11 @@ public class AccountSetting extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.remove(USER_ID_KEY);
         editor.apply();
+    }
+
+    public void onChangePasswordClick(View view) {
+        // Handle the click event here
+        Intent intent = new Intent(this, ChangePassword.class);
+        startActivity(intent);
     }
 }

@@ -1,7 +1,23 @@
 package com.example.hunger_las_dit2b02;
 
 public class User {
-    private String userid, email, username, imgUrl;
+    private String userid, email, username, imgUrl, name, bio;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     // Private constructor to prevent instantiation
     private User() {

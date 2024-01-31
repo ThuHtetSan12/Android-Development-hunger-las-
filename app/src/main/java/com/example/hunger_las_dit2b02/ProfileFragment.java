@@ -7,6 +7,7 @@ package com.example.hunger_las_dit2b02;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,8 +39,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileFragment extends Fragment {
-    TextView userName;
+    private static final int EDIT_PROFILE_REQUEST_CODE = 100;
+    TextView userName, name, bio;
+    ImageView profileImage;
     Button logout;
+    Button editProfileButton;
     GoogleSignInClient gClient;
     GoogleSignInOptions gOptions;
     private SharedPreferences pref;
@@ -58,6 +64,10 @@ public class ProfileFragment extends Fragment {
         // Initialize views
         logout = view.findViewById(R.id.logout);
         userName = view.findViewById(R.id.username);
+        name = view.findViewById(R.id.nameTextView);
+        bio = view.findViewById(R.id.bioTextView);
+        profileImage = view.findViewById(R.id.profileimage);
+        editProfileButton = view.findViewById(R.id.editProfileButton);
         ImageView settingsIcon = view.findViewById(R.id.settingsIcon);
 
         // Google Sign-In configuration
@@ -85,6 +95,18 @@ public class ProfileFragment extends Fragment {
                 logoutAndRedirectToLogin();
             }
         });
+
+        Button editProfileButton = view.findViewById(R.id.editProfileButton); // assuming 'view' is your fragment's root view
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Handle the click event here
+                // For example, you can open the EditProfile activity
+                Intent intent = new Intent(getActivity(), EditProfile.class);
+                startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE);
+            }
+        });
+
 
         settingsIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +174,30 @@ public class ProfileFragment extends Fragment {
     }
     private void updateUIWithUserData(User user) {
         userName.setText(user.getUsername());
+        name.setText(user.getName());
+        bio.setText(user.getBio());
 
+        // Load profile image using Glide
+        if (user.getImgUrl() != null) {
+            Glide.with(requireContext())
+                    .load(user.getImgUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(profileImage);
+        }
     }
+
+    // Inside your ProfileFragment
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // Reload the user data after a successful edit
+            String savedUserId = getSavedUserId();
+            if (!TextUtils.isEmpty(savedUserId)) {
+                getUserDataFromFirestore(savedUserId);
+            }
+        }
+    }
+
 }
