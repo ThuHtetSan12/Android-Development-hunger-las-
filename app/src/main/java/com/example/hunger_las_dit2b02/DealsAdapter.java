@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.DealViewHolder> {
 
@@ -33,7 +35,9 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.DealViewHold
     public void onBindViewHolder(@NonNull DealViewHolder holder, int position) {
         Deal deal = deals.get(position);
         holder.txtDealsRestaurant.setText(deal.getRestaurantName());
-        //holder.imgRestaurantDeals.setImageResource(deal.getImagePath());
+        Glide.with(holder.itemView.getContext())
+                .load("gs://hunger-las.appspot.com/deals/" + deal.getImagePath())
+                .into(holder.imgRestaurantDeals);
         holder.txtDealsInfo.setText(deal.getDealInformation());
     }
 
