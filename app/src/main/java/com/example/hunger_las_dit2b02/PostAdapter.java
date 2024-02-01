@@ -6,18 +6,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
+
+import android.content.Context;
+import com.bumptech.glide.Glide;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> postList;
+    private Context context; // Add a Context variable
 
-    public PostAdapter(List<Post> postList) {
+    public PostAdapter(List<Post> postList, Context context) {
         this.postList = postList;
+        this.context = context;
     }
 
     @NonNull
@@ -36,18 +39,36 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.profilePictureImageView.setImageResource(user.getProfilePictureResId());
         holder.usernameTextView.setText(user.getUsername());
         holder.restaurantInfoTextView.setText(post.getRestaurantInfo());
-        holder.postImageView.setImageResource(post.getPostImageResId());
+
+        // Use Glide to load the image from the URL
+        Glide.with(context)
+                .load(post.getImageUrl()) // Use getImageUrl() instead of getPostImageResId()
+                .into(holder.postImageView);
+
         holder.likeCountTextView.setText(String.valueOf(post.getLikeCount()));
         holder.commentCountTextView.setText(String.valueOf(post.getCommentCount()));
         holder.captionTextView.setText(post.getCaption());
-        holder.dateTextView.setText("Posted on: " + post.getDate());
+        holder.dateTextView.setText(post.getDate());
 
         // Set rating dynamically using RatingBar
         RatingBar ratingBar = holder.ratingStarsRatingBar;
         ratingBar.setRating(post.getRating());
 
         // Set click listeners for like, comment, and favourite buttons
-        // Implement the click listeners as needed
+        holder.likeIconImageView.setOnClickListener(v -> {
+            // Handle like button click
+            // You may want to update the like count and UI accordingly
+        });
+
+        holder.commentIconImageView.setOnClickListener(v -> {
+            // Handle comment button click
+            // You may want to open a comment activity or show a dialog
+        });
+
+        holder.favouriteIconImageView.setOnClickListener(v -> {
+            // Handle favourite button click
+            // You may want to update the UI accordingly or perform other actions
+        });
     }
 
     @Override

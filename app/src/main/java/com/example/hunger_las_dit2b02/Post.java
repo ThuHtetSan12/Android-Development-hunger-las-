@@ -3,18 +3,18 @@ package com.example.hunger_las_dit2b02;
 public class Post {
     private User1 user;
     private String restaurantInfo;
-    private int postImageResId;
+    private String imageUrl; // Change the type to String
     private int likeCount;
     private int commentCount;
     private String caption;
     private String date;
     private int rating;
 
-    public Post(User1 user, String restaurantInfo, int postImageResId,
+    public Post(User1 user, String restaurantInfo, String imageUrl, // Change the parameter type
                 int likeCount, int commentCount, String caption, String date, int rating) {
         this.user = user;
         this.restaurantInfo = restaurantInfo;
-        this.postImageResId = postImageResId;
+        this.imageUrl = imageUrl;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.caption = caption;
@@ -34,8 +34,8 @@ public class Post {
         return restaurantInfo;
     }
 
-    public int getPostImageResId() {
-        return postImageResId;
+    public String getImageUrl() { // Change the method name
+        return imageUrl;
     }
 
     public int getLikeCount() {
