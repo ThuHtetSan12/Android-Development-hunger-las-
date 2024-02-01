@@ -33,7 +33,7 @@
         android:id="@+id/layoutImageUpload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_below="@id/txtHeader"
         android:layout_marginTop="16dp">
 
@@ -47,10 +47,10 @@
             android:layout_marginBottom="8dp"/>
 
         <!-- Image Previews -->
-        <LinearLayout
-            android:id="@+id/layoutImagePreviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/layoutImagePreview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:orientation="horizontal"/>
 
     </LinearLayout>
