@@ -45,6 +45,7 @@ public class EditProfile extends AppCompatActivity {
     private Button saveChangesButton;
 
     private Uri imageUrl;
+    private Uri originalImageUrl;
     private StorageReference storageReference;
     private CircularProgressIndicator progressBar;
     @Override
@@ -109,7 +110,7 @@ public class EditProfile extends AppCompatActivity {
             userRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     if (task.getResult() != null && task.getResult().exists()) {
-                        // Retrieve user data and set it to respective views
+
                         User user = task.getResult().toObject(User.class);
 
                         if (user != null) {
@@ -119,6 +120,7 @@ public class EditProfile extends AppCompatActivity {
 
                             // Load profile image using Glide
                             if (user.getImgUrl() != null) {
+                                originalImageUrl = Uri.parse(user.getImgUrl());
                                 Glide.with(EditProfile.this)
                                         .load(user.getImgUrl())
                                         .apply(RequestOptions.circleCropTransform())
@@ -169,7 +171,7 @@ public class EditProfile extends AppCompatActivity {
             uploadImage();
         } else {
             // If no image is selected, save other data directly
-            saveUserData(null);
+            saveUserData(originalImageUrl.toString());
         }
     }
 
@@ -199,6 +201,20 @@ public class EditProfile extends AppCompatActivity {
 
         DocumentReference userRef = fstore.collection("users").document(userId);
 
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            // Get the old image URL from Firestore
+            String oldImageUrl = documentSnapshot.getString("imgUrl");
+
+            // Delete the old image from Firebase Storage
+            if (oldImageUrl != null && !oldImageUrl.equals(imageUrl)) {
+                StorageReference oldImageRef = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageUrl);
+                oldImageRef.delete().addOnSuccessListener(aVoid -> {
+                    Log.d("EditProfile", "Old image deleted successfully");
+                }).addOnFailureListener(e -> {
+                    Log.e("EditProfile", "Failed to delete old image: " + e.getMessage());
+                });
+            }
+
         userRef.update("name", editTextName.getText().toString(),
                         "username", editTextUsername.getText().toString(),
                         "bio", editTextBio.getText().toString(),
@@ -212,8 +228,8 @@ public class EditProfile extends AppCompatActivity {
                         Toast.makeText(EditProfile.this, "Failed to save changes", Toast.LENGTH_SHORT).show();
                     }
                 });
+        });
     }
-
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();

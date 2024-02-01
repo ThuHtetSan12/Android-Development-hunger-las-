@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,6 +98,8 @@ public class Signup extends AppCompatActivity {
 
     private void saveUserToFirestore(String userID, String email, String username) {
         User user = new User(userID, email, username);
+        user.setFollowing(new ArrayList<>());
+        user.setFollowers(new ArrayList<>());
 
         fStore.collection("users")
                 .document(userID)

@@ -12,6 +12,7 @@ import java.util.List;
 
 import android.content.Context;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
@@ -33,10 +34,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
-        User1 user = post.getUser();
+        User user = post.getUser();
 
         // Bind data to views
-        holder.profilePictureImageView.setImageResource(user.getProfilePictureResId());
+        String imageUrl = user.getImgUrl();
+
+// Load profile image using Glide
+        if (imageUrl != null) {
+            Glide.with(context)
+                    .load(imageUrl)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.profilePictureImageView);
+        }
         holder.usernameTextView.setText(user.getUsername());
         holder.restaurantInfoTextView.setText(post.getRestaurantInfo());
 

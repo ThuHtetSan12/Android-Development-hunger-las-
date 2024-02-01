@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
                             int commentCount = 0; // Hardcoded value
 
                             // Create Post object
-                            User1 user = new User1(R.drawable.user_icon, "Username"); // You may need to fetch user info
+                            User user = new User("Userid", "email","username"); // You may need to fetch user info
                             Post post = new Post(user, restaurantId, imageUrl, likeCount, commentCount, caption, date, rating);
                             postList.add(post);
                         }

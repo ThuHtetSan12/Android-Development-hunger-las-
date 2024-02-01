@@ -5,6 +5,9 @@
     android:layout_height="match_parent">
 
     <!-- User Information Section -->
+
+
+    <!-- Buttons: "Create Review" and "Edit Profile" -->
     <LinearLayout
         android:id="@+id/userInfoLayout"
         android:layout_width="match_parent"
@@ -24,8 +27,8 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="username"
                 android:layout_gravity="start"
+                android:text="username"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -41,15 +44,13 @@
         </LinearLayout>
 
 
-
         <!-- User Statistics -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
-
+            android:orientation="horizontal">
 
 
             <ImageView
@@ -74,20 +75,20 @@
                     android:id="@+id/post"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Posts"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:text="Posts"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
             <!-- Followers Layout -->
             <LinearLayout
@@ -99,23 +100,23 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/followersTextView"
+                    android:id="@+id/followersCountTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:text=""
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Followers"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:text="Followers"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Following Layout -->
@@ -128,35 +129,35 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/followingTextView"
+                    android:id="@+id/followingCountTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:text=""
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Following"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:text="Following"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
 
-            <!-- name -->
-            <TextView
-                android:id="@+id/nameTextView"
-                android:layout_width="352dp"
-                android:layout_height="wrap_content"
-                android:text="name"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <!-- name -->
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!-- Bio -->
         <TextView
@@ -169,9 +170,6 @@
 
     </LinearLayout>
 
-
-
-    <!-- Buttons: "Create Review" and "Edit Profile" -->
     <LinearLayout
         android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
@@ -218,14 +216,11 @@
         android:textAllCaps="false"
         android:padding="5dp"/>
     </LinearLayout>
-
-    <!-- Recycler View for Items -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/itemsRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonsLayout"
-        android:padding="16dp" />
-
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_below="@id/logoutLayout"/>
 
 </RelativeLayout>

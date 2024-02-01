@@ -15,6 +15,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,9 +36,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class ProfileFragment extends Fragment {
     private static final int EDIT_PROFILE_REQUEST_CODE = 100;
@@ -49,11 +58,28 @@ public class ProfileFragment extends Fragment {
     private SharedPreferences pref;
     private static final String USER_ID_KEY = "user_id";
     private FirebaseFirestore fstore;
+    private TextView followersCount;
+    private TextView followingCount;
+    private RecyclerView recyclerView;
+    private PostAdapter postAdapter;
+    private User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Initialize RecyclerView
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Initialize Firestore
+        fstore = FirebaseFirestore.getInstance();
+
+        // Fetch data from Firebase
+        fetchPostsFromFirebase();
+
+        return view;
     }
 
 
@@ -69,6 +95,8 @@ public class ProfileFragment extends Fragment {
         profileImage = view.findViewById(R.id.profileimage);
         editProfileButton = view.findViewById(R.id.editProfileButton);
         ImageView settingsIcon = view.findViewById(R.id.settingsIcon);
+        followersCount = view.findViewById(R.id.followersCountTextView);
+        followingCount = view.findViewById(R.id.followingCountTextView);
 
         // Google Sign-In configuration
           gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
@@ -84,6 +112,7 @@ public class ProfileFragment extends Fragment {
         if (!TextUtils.isEmpty(savedUserId)) {
             //showUserIdMessage(savedUserId);
             getUserDataFromFirestore(savedUserId);
+            //add update ui
 
         }else{
             logoutAndRedirectToLogin();
@@ -155,18 +184,19 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                if (documentSnapshot.exists()) {
+                if (documentSnapshot.exists()) {
 
-                    User user = documentSnapshot.toObject(User.class);
+                    user = documentSnapshot.toObject(User.class);
 
                     // Update the UI with the user data
                     updateUIWithUserData(user);
 
                     Toast.makeText(getActivity(), "Welcome, " + user.getUsername() + "!", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // Document does not exist
-//                    Toast.makeText(getActivity(), "User not found in Firestore", Toast.LENGTH_SHORT).show();
-//                }
+                } else {
+                    // Document does not exist
+                    Toast.makeText(getActivity(), "User not found in Firestore", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
 
@@ -184,9 +214,11 @@ public class ProfileFragment extends Fragment {
                     .apply(RequestOptions.circleCropTransform())
                     .into(profileImage);
         }
+        followersCount.setText(String.valueOf(user.getFollowers().size()));
+        followingCount.setText(String.valueOf(user.getFollowing().size()));
     }
 
-    // Inside your ProfileFragment
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -196,8 +228,52 @@ public class ProfileFragment extends Fragment {
             String savedUserId = getSavedUserId();
             if (!TextUtils.isEmpty(savedUserId)) {
                 getUserDataFromFirestore(savedUserId);
+
+                // Refresh posts after the user edits the profile
+
+                //postAdapter.setData(updatedPosts);
             }
         }
     }
 
+
+    private void fetchPostsFromFirebase() {
+        String savedUserId = getSavedUserId();
+        // Assume you have a "posts" collection in Firestore
+        fstore.collection("posts")
+                .whereEqualTo("userid", savedUserId) // Add this filter condition
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Post> postList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            String caption = document.getString("caption");
+                            Timestamp timestamp = document.getTimestamp("date");
+                            long restaurantIdLong = document.getLong("restaurant_id");
+                            String restaurantId = String.valueOf(restaurantIdLong);
+                            String imageUrl = document.getString("imageUrl");
+                            int rating = document.getLong("rating").intValue(); // Assuming rating is stored as a number
+                            String userId = document.getString("userid");
+                            String date = timestamp != null ? new SimpleDateFormat("h:mm a", Locale.US).format(timestamp.toDate()) : "";
+
+
+                            int likeCount = 0; // Hardcoded value
+                            int commentCount = 0; // Hardcoded
+
+                            Post post = new Post(user, restaurantId, imageUrl, likeCount, commentCount, caption, date, rating);
+                            postList.add(post);
+                        }
+
+                        // Check if the fragment is still attached to the activity before updating UI
+                        if (isAdded()) {
+                            // Set the adapter with the retrieved data
+                            postAdapter = new PostAdapter(postList, getContext());
+                            recyclerView.setAdapter(postAdapter);
+                        }
+                    } else {
+                        // Handle errors
+                    }
+                });
+    }
 }

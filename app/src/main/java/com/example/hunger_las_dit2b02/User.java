@@ -1,7 +1,12 @@
 package com.example.hunger_las_dit2b02;
 
+import java.util.List;
+
 public class User {
     private String userid, email, username, imgUrl, name, bio;
+
+    private List<String> followers;
+    private List<String> following;
 
     public String getBio() {
         return bio;
@@ -55,6 +60,30 @@ public class User {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public List<String> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
+
+    public void addFollower(String follower) {
+        this.followers.add(follower);
+    }
+
+    public void addFollowing(String following) {
+        this.following.add(following);
     }
 
     public void setImgUrl(String imgUrl) {
