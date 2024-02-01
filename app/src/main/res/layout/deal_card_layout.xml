@@ -18,7 +18,7 @@
         android:padding="8dp"
         android:gravity="center" />
 
-    <!-- Image and Information + Button -->
+    <!-- Image and Information -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/logo" />
 
-        <!-- Information and Button -->
+        <!-- Information -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="180dp"
@@ -41,27 +41,14 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- Deal Information -->
             <TextView
                 android:id="@+id/txtDealsInfo"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Deal Information"
-                android:textSize="16sp" />
-
-            <!-- Find Out More Button -->
-            <Button
-                android:id="@+id/btnDealsSeeMore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:text="See More"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"
-                />
-
+                android:textSize="16sp"
+                android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
 
