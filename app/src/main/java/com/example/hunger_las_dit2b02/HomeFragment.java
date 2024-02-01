@@ -1,74 +1,91 @@
 package com.example.hunger_las_dit2b02;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+    private FirebaseFirestore db;
 
-            View view = inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-            // Initialize RecyclerView
-            recyclerView = view.findViewById(R.id.recyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // Initialize RecyclerView
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-            // Create sample data
-            List<Post> postList = createSamplePosts();
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
 
-            // Create and set the adapter
-            postAdapter = new PostAdapter(postList);
-            recyclerView.setAdapter(postAdapter);
+        // Fetch data from Firebase
+        fetchDataFromFirebase();
 
-            return view;
-        }
-
-        private List<Post> createSamplePosts() {
-            List<Post> postList = new ArrayList<>();
-            User1 user1 = new User1(R.drawable.logo, "Lindy");
-            User1 user2 = new User1(R.drawable.logo, "Angie");
-            User1 user3 = new User1(R.drawable.logo, "San");
-
-            // Create sample Post objects
-            Post post1 = new Post(user1, "Mr Prata - Location 1",
-                    R.drawable.logo, 150, 30, "Yummers", "January 10, 2024", 5);
-
-            Post post2 = new Post(user2, "Yakiniku GO - Location 2",
-                    R.drawable.logo, 200, 40, "hardcoded data", "January 15, 2024", 1);
-
-            Post post3 = new Post(user3, "Sanook Kitchen - Location 3",
-                    R.drawable.logo, 120, 25, "yayayay", "January 20, 2024", 3);
-
-            // Add posts to the list
-            postList.add(post1);
-            postList.add(post2);
-            postList.add(post3);
-
-            return postList;
-        }
+        return view;
     }
+
+    private void fetchDataFromFirebase() {
+            // Assume you have a "posts" collection in Firestore
+            db.collection("posts")
+                    .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Post> postList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Map Firebase fields to Post object
+                            String caption = document.getString("caption");
+                            Timestamp timestamp = document.getTimestamp("date");
+                            long restaurantIdLong = document.getLong("restaurant_id");
+
+                            // Convert restaurantId to a String
+                            String restaurantId = String.valueOf(restaurantIdLong);
+
+                            String imageUrl = document.getString("imageUrl");
+                            int rating = document.getLong("rating").intValue(); // Assuming rating is stored as a number
+                            String userId = document.getString("userid");
+
+                            // Convert timestamp to a formatted date string
+                            String date = timestamp != null ? new SimpleDateFormat("h:mm a", Locale.US).format(timestamp.toDate()) : "";
+
+                            // You may need to fetch additional data (e.g., user info, restaurant info) based on userId and restaurantId
+
+                            // Hardcode like and comment counts for now
+                            int likeCount = 0; // Hardcoded value
+                            int commentCount = 0; // Hardcoded value
+
+                            // Create Post object
+                            User1 user = new User1(R.drawable.user_icon, "Username"); // You may need to fetch user info
+                            Post post = new Post(user, restaurantId, imageUrl, likeCount, commentCount, caption, date, rating);
+                            postList.add(post);
+                        }
+
+                        // Check if the fragment is still attached to the activity before updating UI
+                        if (isAdded()) {
+                            // Set the adapter with the retrieved data
+                            postAdapter = new PostAdapter(postList, getContext());
+                            recyclerView.setAdapter(postAdapter);
+                        }
+                    } else {
+                        // Handle errors
+                    }
+                });
+    }
+}

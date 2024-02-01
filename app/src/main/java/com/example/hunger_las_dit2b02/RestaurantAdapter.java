@@ -53,7 +53,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             imgRestaurant = itemView.findViewById(R.id.imgRestaurant);
             txtRestaurantName = itemView.findViewById(R.id.txtRestaurantName);
             txtRating = itemView.findViewById(R.id.txtRating);
-            txtTotalRatings = itemView.findViewById(R.id.txtTotalRatings);
+            txtTotalRatings = itemView.findViewById(R.id.txtReviewCount);
         }
     }
 }
