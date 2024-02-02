@@ -1,6 +1,5 @@
 package com.example.hunger_las_dit2b02;
 
-// RestaurantAdapter.java
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
@@ -29,8 +31,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant restaurant = restaurantList.get(position);
 
-        // Bind data to views
-        holder.imgRestaurant.setImageResource(restaurant.getImageResourceId());
+        // Use Glide to load images from URLs
+        Glide.with(holder.itemView.getContext())
+                .load(restaurant.getImageUrl()) // assuming imageUrl is a String containing the URL
+                .into(holder.imgRestaurant);
+
+        // Bind other data to views
         holder.txtRestaurantName.setText(restaurant.getName());
         holder.txtRating.setText(String.valueOf(restaurant.getRating()));
         holder.txtTotalRatings.setText("(" + restaurant.getTotalRatings() + ")");

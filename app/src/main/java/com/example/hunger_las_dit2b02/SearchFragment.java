@@ -17,6 +17,10 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RestaurantAdapter restaurantAdapter;
+    private FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,44 +38,42 @@ public class SearchFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewRestaurants);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // Create sample restaurant data
-        List<Restaurant> restaurantList = createSampleRestaurants();
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
 
-        // Create and set the adapter
-        restaurantAdapter = new RestaurantAdapter(restaurantList);
-        recyclerView.setAdapter(restaurantAdapter);
-
-        // Set up item click listener
-        recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(getActivity(),
-                recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // Handle item click, e.g., open RestaurantDetailsActivity
-                startActivity(new Intent(getActivity(), RestaurantDetailsActivity.class));
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-                // Handle long item click if needed
-            }
-        }));
+        // Fetch restaurant data from Firebase
+        fetchRestaurantData();
 
         return view;
     }
 
-    private List<Restaurant> createSampleRestaurants() {
-        List<Restaurant> restaurantList = new ArrayList<>();
+    private void fetchRestaurantData() {
+        // Assume you have a "restaurants" collection in Firestore
+        db.collection("restaurants")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurantList = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Map Firebase fields to Restaurant object
+                            String restaurantName = document.getString("restaurant_name");
+                            String imageUrl = document.getString("imageUrl");
 
-        // Create sample Restaurant objects
-        Restaurant restaurant1 = new Restaurant(R.drawable.logo, "Restaurant Name 1", 4.5, 293);
-        Restaurant restaurant2 = new Restaurant(R.drawable.logo, "Restaurant Name 2", 4.2, 150);
-        Restaurant restaurant3 = new Restaurant(R.drawable.logo, "Restaurant Name 3", 4.8, 500);
+                            // Hardcoded values for rating and count
+                            double rating = 4.5;
+                            int count = 293;
 
-        // Add restaurants to the list
-        restaurantList.add(restaurant1);
-        restaurantList.add(restaurant2);
-        restaurantList.add(restaurant3);
+                            // Create Restaurant object
+                            Restaurant restaurant = new Restaurant(imageUrl, restaurantName, rating, count);
+                            restaurantList.add(restaurant);
+                        }
 
-        return restaurantList;
+                        // Set up and attach the adapter after fetching data
+                        restaurantAdapter = new RestaurantAdapter(restaurantList);
+                        recyclerView.setAdapter(restaurantAdapter);
+                    } else {
+                        // Handle errors
+                    }
+                });
     }
 }
