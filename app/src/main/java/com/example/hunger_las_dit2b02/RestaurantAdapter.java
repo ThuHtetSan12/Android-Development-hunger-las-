@@ -1,5 +1,6 @@
 package com.example.hunger_las_dit2b02;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,39 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
 
     private List<Restaurant> restaurantList;
+    private List<Restaurant> filteredRestaurantList;
 
     public RestaurantAdapter(List<Restaurant> restaurantList) {
         this.restaurantList = restaurantList;
+        this.filteredRestaurantList = new ArrayList<>(restaurantList);
+    }
+
+    public void setRestaurantList(List<Restaurant> restaurantList) {
+        this.restaurantList = restaurantList;
+        notifyDataSetChanged();
+    }
+    public void filterRestaurants(String query) {
+        filteredRestaurantList.clear();
+        if (query.isEmpty()) {
+            // display all restaurants initially
+            filteredRestaurantList.addAll(restaurantList);
+        } else {
+            // Filter deals based on the search query (case-insensitive)
+            for (Restaurant restaurant : restaurantList) {
+                if (restaurant.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredRestaurantList.add(restaurant);
+                    Log.d("SearchAdapter", "Added restaurant: " + restaurant.getName());
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -29,22 +55,35 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant restaurant = restaurantList.get(position);
+        if (position < filteredRestaurantList.size()) {
+            Restaurant restaurant = filteredRestaurantList.get(position);
+            // Use Glide to load images from URLs
+            Glide.with(holder.itemView.getContext())
+                    .load(restaurant.getImageUrl())
+                    .into(holder.imgRestaurant);
 
-        // Use Glide to load images from URLs
-        Glide.with(holder.itemView.getContext())
-                .load(restaurant.getImageUrl()) // assuming imageUrl is a String containing the URL
-                .into(holder.imgRestaurant);
+            // Bind other data to views
+            holder.txtRestaurantName.setText(restaurant.getName());
+            holder.txtRating.setText(String.valueOf(restaurant.getRating()));
+            holder.txtTotalRatings.setText("(" + restaurant.getTotalRatings() + ")");
+        }
+        else {
+            Restaurant restaurant = restaurantList.get(position);
+            // Use Glide to load images from URLs
+            Glide.with(holder.itemView.getContext())
+                    .load(restaurant.getImageUrl())
+                    .into(holder.imgRestaurant);
 
-        // Bind other data to views
-        holder.txtRestaurantName.setText(restaurant.getName());
-        holder.txtRating.setText(String.valueOf(restaurant.getRating()));
-        holder.txtTotalRatings.setText("(" + restaurant.getTotalRatings() + ")");
+            // Bind other data to views
+            holder.txtRestaurantName.setText(restaurant.getName());
+            holder.txtRating.setText(String.valueOf(restaurant.getRating()));
+            holder.txtTotalRatings.setText("(" + restaurant.getTotalRatings() + ")");
+        }
     }
 
     @Override
     public int getItemCount() {
-        return restaurantList.size();
+        return filteredRestaurantList.size() > 0 ? filteredRestaurantList.size() : restaurantList.size();
     }
 
     static class RestaurantViewHolder extends RecyclerView.ViewHolder {

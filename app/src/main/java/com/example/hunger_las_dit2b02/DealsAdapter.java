@@ -35,19 +35,19 @@ public class DealsAdapter extends RecyclerView.Adapter<DealsAdapter.DealViewHold
     }
 
     public void filterDeals(String query) {
-        filteredDeals.clear();
+                    filteredDeals.clear();
 
-        if (query.isEmpty()) {
-            // If the query is empty, display all deals
-            filteredDeals.addAll(deals);
-        } else {
-            // Filter deals based on the search query (case-insensitive)
-            for (Deal deal : deals) {
-                if (deal.getRestaurantName().toLowerCase().contains(query.toLowerCase())) {
-                    filteredDeals.add(deal);
-                    Log.d("DealsAdapter", "Added deal: " + deal.getRestaurantName());
-                }
-            }
+                    if (query.isEmpty()) {
+                        // If the query is empty, display all deals
+                        filteredDeals.addAll(deals);
+                    } else {
+                        // Filter deals based on the search query (case-insensitive)
+                        for (Deal deal : deals) {
+                            if (deal.getRestaurantName().toLowerCase().contains(query.toLowerCase())) {
+                                filteredDeals.add(deal);
+                                Log.d("DealsAdapter", "Added deal: " + deal.getRestaurantName());
+                            }
+                        }
         }
 
         notifyDataSetChanged();
